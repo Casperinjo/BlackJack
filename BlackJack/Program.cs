@@ -10,6 +10,8 @@ namespace BlackJack
     {
         static void Main(string[] args)
         {
+            //Deklarera det första korten för person och delare
+
             Random randNummer = new Random();
 
             int[] personKort = new int[11];
@@ -34,6 +36,7 @@ namespace BlackJack
             int summaDelare = delarKort[1] + delarKort[2];
 
 
+            //Deklaration för resten av personens kort
             for (int i = 0; i < personKort.Length; i++)
             {
 
@@ -71,6 +74,7 @@ namespace BlackJack
                 }
             }
 
+            //Deklaration för delarens kort ifall personen inte för över 21
             if ((summaPerson <= 21))
             {
 
