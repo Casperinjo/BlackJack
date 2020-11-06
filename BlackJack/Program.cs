@@ -14,7 +14,40 @@ namespace BlackJack
 
             Random randNummer = new Random();
 
-            int[] personKort = new int[11];
+            
+
+            bool gameState = true;
+            double vinstVärde = 0;
+            double slutSumma = 0;
+            int wager = 0;
+
+
+            while (gameState == true)
+            {
+                bool vinst = false;
+                bool förlust = false;
+                bool blackJack = false;
+                bool push = false;
+                
+
+
+
+
+                Console.Clear();
+                vinstVärde = vinstVärde + (slutSumma - wager);
+                
+                Console.WriteLine($"Din totala vinst {vinstVärde}" );
+                
+
+
+                Console.WriteLine("Hur mycket pengar vill du satsa? ");
+                 wager = int.Parse(Console.ReadLine());
+
+                
+
+
+
+                int[] personKort = new int[11];
 
             int[] delarKort = new int[11];
 
@@ -36,7 +69,13 @@ namespace BlackJack
             int summaDelare = delarKort[1] + delarKort[2];
 
 
+            
+            
             //Deklaration för resten av personens kort
+            
+
+           
+
             for (int i = 0; i < personKort.Length; i++)
             {
 
@@ -91,7 +130,7 @@ namespace BlackJack
 
                     Console.WriteLine($" {delarKort[i]} , Summan är nu {summaDelare} ");
 
-                    if (summaDelare > 21 || (summaDelare > summaPerson && summaDelare <= 21))
+                    if (summaDelare > 21 || (summaDelare >= summaPerson && summaDelare <= 21))
                     {
                         break;
                     }
@@ -100,30 +139,100 @@ namespace BlackJack
 
                 if (summaDelare > 21 && summaPerson <= 21)
                 {
-                    Console.WriteLine($"Du vann, delare fick {summaDelare} som summa ");
+                    
+                        if(summaPerson == 21)
+                        {
+                             blackJack = true;
+                             vinst = true;
+                        }
+
+                        else
+                        {
+                            Console.WriteLine($"Du vann, delare fick {summaDelare} som summa ");
+                            vinst = true;
+
+                        }
                 }
+                
+
 
                 else if (summaDelare <= 21 || (summaDelare > summaPerson && summaDelare <= 21))
                 {
-                    Console.WriteLine("Tyvärr delaren var närmare 21 och du förlorade");
+                    if(summaPerson == 21)
+                        {
+                            push = true;
+                        }
+                        
+                    else
+                        {
+                        Console.WriteLine("Tyvärr delaren var närmare 21 och du förlorade");
+                        förlust = true;
+                        }
+
                 }
 
-                else if (summaPerson >= summaDelare)
-                {
-                    Console.WriteLine("Tyvärr du fick över 21 och förlorade ");
-                }
+                
 
             }
 
 
             else if (summaPerson > 21)
-            {
+                {
                 Console.WriteLine("Du fick över 21 och förlorade");
+                 förlust = true;
+
+
+                }
+
+                
+
+                if (blackJack == true && vinst == true)
+                {
+                    slutSumma = wager * 2.5;
+                    Console.WriteLine($"Du vann och fick blackjack och fick {slutSumma - wager} tillbaka ");
+                }
+
+
+                else if (vinst == true)
+                {
+                    slutSumma = wager * 2;
+                    Console.WriteLine($"Du vann och fick {slutSumma - wager} tillbaka ");
+                }
+
+                else if (push == true)
+                {
+                    slutSumma = wager;
+                    Console.WriteLine($"Du hamnade lika med delaren och fick tillba {slutSumma} ");
+                }
+
+                else if(förlust == true)
+                {
+                    Console.WriteLine($"Du förlorade och fick inget tillbaka ");
+                }
+
+                Console.WriteLine("Vill du spela igen Ja/Nej? ");
+                string omstart = Console.ReadLine();
+
+                if(omstart == "Ja")
+                {
+                    gameState = true;
+                }
+                
+                else if(omstart == "Nej")
+                {
+                    gameState = false;
+                }
+
+                
             }
+                
+                
+                
+            
+
+            Console.WriteLine("Spelet avslutas tryck \"ENTER \" för att gå ut ");
 
             Console.ReadLine();
-
-
 
 
 
